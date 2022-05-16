@@ -2,7 +2,7 @@
 const { Sequelize } = require("sequelize");
 const dotenv = require("dotenv");
 
-dotenv.config({ path: "./set.env" });
+dotenv.config({ path: "./config.env" });
 
 const database = new Sequelize({
   dialect: "postgres",
