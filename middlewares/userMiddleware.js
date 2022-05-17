@@ -42,6 +42,12 @@ const protectAdmin = catchAsync(async (req, res, next) => {
   next();
 });
 
+const protectCustomer = catchAsync(async (req, res, next) => {
+  if (req.sessionUser.role !== "customer") {
+    return next(new AppError("Sorry, you cannot modify this", 403));
+  }
+});
+
 const userExists = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 

@@ -1,24 +1,36 @@
 //bookstore
 const express = require("express");
 
-//controllers
 //middlewares
+
+//controllers
+const {
+  getAllRestaurants,
+  createRestaurant,
+  getRestaurantById,
+  updateRestaurant,
+  deleteRestaurant,
+  createReview,
+  updateReview,
+  deleteReview,
+} = require("../controllers/restaurantController");
+
 //models
 //routes
 const router = express.Router();
+router.route("/").get(getAllRestaurants).post(createRestaurant);
+
 router
-  .route("/new")
-  .post()
-  .route("/")
-  .get()
   .route("/:id")
-  .get()
-  .patch()
-  .delete()
+  .get(getRestaurantById)
+  .patch(updateRestaurant)
+  .delete(deleteRestaurant);
+
+router
   .route("/reviews/:id")
-  .post()
-  .patch()
-  .delete();
+  .post(createReview)
+  .patch(updateReview)
+  .delete(deleteReview);
 //utils
 
-module.exports = { restaurantsRoutes: router };
+module.exports = { restaurantsRouter: router };

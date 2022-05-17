@@ -1,11 +1,11 @@
-const { Restaurant } = require("../models/restaurantsModel");
-const { Meal } = require("../models/mealsModel");
-const { Order } = require("../models/ordersModel");
+const { Restaurant } = require("./restaurantsModel");
+const { Meal } = require("./mealsModel");
+const { Order } = require("./ordersModel");
 const { User } = require("./userModel");
-const { Review } = require("../models/reviewsModel");
+const { Review } = require("./reviewsModel");
 
 const initModel = () => {
-  Restaurant.hasMany(Meal, { foreignKey: "restaurantId" });
+  Restaurant.hasMany(Meal);
   Meal.belongsTo(Restaurant);
 
   Restaurant.hasMany(Review, { foreignKey: "restaurantId" });

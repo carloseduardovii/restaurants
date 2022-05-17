@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { database } = require("../utils/database");
 
-const Order = database.define("restaurant", {
+const Order = database.define("order", {
   id: {
     primaryKey: true,
     autoIncrement: true,
@@ -9,11 +9,11 @@ const Order = database.define("restaurant", {
     type: DataTypes.INTEGER,
   },
   mealId: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   userId: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   totalPrice: {

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { database } = require("../utils/database");
 
-const Meal = database.define("restaurant", {
+const Meal = database.define("meal", {
   id: {
     primaryKey: true,
     autoIncrement: true,

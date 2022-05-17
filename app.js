@@ -10,6 +10,8 @@ const { globalErrorHandler } = require("./controllers/errorController");
 
 //routes
 const { userRouter } = require("./routes/userRoutes");
+const { restaurantsRouter } = require("./routes/restaurantsRoutes");
+const { mealsRouter } = require("./routes/mealsRoutes");
 
 const app = express();
 
@@ -29,6 +31,8 @@ app.use(limiter);
 // Endpoints
 // http://localhost:4000
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/restaurants", restaurantsRouter);
+app.use("/api/v1/meals", mealsRouter);
 
 app.use("*", globalErrorHandler);
 
