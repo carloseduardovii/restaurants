@@ -18,8 +18,11 @@ const createMeal = catchAsync(async (req, res, next) => {
     name,
     price,
     restaurantId,
+
     userId: sessionUser.id,
   });
+
+  console.log(id);
 
   res.status(201).json({ newMeal });
 });
@@ -44,7 +47,7 @@ const updateMeal = catchAsync(async (req, res, next) => {
 const deleteMeal = catchAsync(async (req, res, next) => {
   const { meal } = req;
 
-  await meal.update({ status: "desactiveted" });
+  await meal.update({ status: "deactiveted" });
 
   res.status(200).json({ status: "success" });
 });
