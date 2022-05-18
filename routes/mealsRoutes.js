@@ -1,6 +1,8 @@
 //bookstore
 const express = require("express");
 
+//middlewares
+const { protectToken } = require("../middlewares/userMiddleware");
 //controllers
 const {
   getAllMeals,
@@ -10,11 +12,12 @@ const {
   deleteMeal,
 } = require("../controllers/mealsController");
 
-//middlewares
 //models
 //routes
 const router = express.Router();
 router.route("/").get(getAllMeals);
+
+//router.use(protectToken);
 router
   .route("/:id")
   .get(getMealById)

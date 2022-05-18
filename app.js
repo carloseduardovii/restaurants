@@ -12,7 +12,7 @@ const { globalErrorHandler } = require("./controllers/errorController");
 const { userRouter } = require("./routes/userRoutes");
 const { restaurantsRouter } = require("./routes/restaurantsRoutes");
 const { mealsRouter } = require("./routes/mealsRoutes");
-
+const { ordersRouter } = require("./routes/ordersRoutes");
 const app = express();
 
 app.use(cors());
@@ -33,6 +33,7 @@ app.use(limiter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/restaurants", restaurantsRouter);
 app.use("/api/v1/meals", mealsRouter);
+app.use("/api/v1/orders", ordersRouter);
 
 app.use("*", globalErrorHandler);
 

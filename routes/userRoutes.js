@@ -39,13 +39,12 @@ router.route("/login").post(login);
 
 router.route("/").get(getAllUsers);
 
+router.route("/orders").get(orderExists, getAllOrders);
 //router.use(protectToken);
 router
   .route("/:id")
   .patch(userExists, updateUser)
   .delete(userExists, deactivatedUser);
-
-router.route("/orders").get(orderExists, getAllOrders);
 
 router.route("/orders/:id").get(orderExists, getOrderById);
 
