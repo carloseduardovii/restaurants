@@ -1,15 +1,15 @@
 //models
-const { User } = require("../models/userModel");
 const { Order } = require("../models/ordersModel");
+const { Meal } = require("../models/mealsModel");
 
 //utils
-const { catchAsync } = require("../utils/catchAsync");
 const { AppError } = require("../utils/appErrors");
+const { catchAsync } = require("../utils/catchAsync");
 
 const orderExists = catchAsync(async (req, res, next) => {
-  const { userId } = req.params;
+  const { id } = req.params;
 
-  const order = await Order.findOne({ where: { userId, status: "active" } });
+  const order = await Order.findOne({ where: { id } });
 
   if (!order) {
     return next(new AppError("Order not found, pleace make your order", 404));
@@ -17,7 +17,21 @@ const orderExists = catchAsync(async (req, res, next) => {
 
   req.order = order;
 
-  next();
+  return next();
 });
 
-module.exports = { orderExists };
+const mealExists = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const meal = await Meal.findOne({ where: { id } });
+
+  if (!meal) {
+    return next(new AppError("Meal not found, pleace make your order", 404));
+  }
+
+  req.meal = meal;
+
+  return next();
+});
+
+module.exports = { orderExists, mealExists };

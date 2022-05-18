@@ -1,22 +1,35 @@
 //models
 const { Order } = require("../models/ordersModel");
+const { Meal } = require("../models/mealsModel");
 
 //utils
 const { catchAsync } = require("../utils/catchAsync");
+const { AppError } = require("../utils/appErrors");
 
 const createOrder = catchAsync(async (req, res, next) => {
-  const { quantity, id } = req.body;
+  const { sessionUser } = req;
+  const { mealId, quantity } = req.body;
+
+  const meal = await Meal.findByPk(mealId);
+
+  if (!meal) {
+    return next(new AppError("Meal not found", 404));
+  }
+
+  const totalPrice = meal.price * quantity;
 
   const newOrder = await Order.create({
+    mealId,
     quantity,
-    mealId: id,
+    totalPrice,
+    userId: sessionUser.id,
   });
 
   res.status(201).json({ newOrder });
 });
 
 const getAllUserOrders = catchAsync(async (req, res, next) => {
-  const orders = await Order.findAll({ where: { status: "active" } });
+  const orders = await Order.findAll();
 
   res.status(200).json({ orders });
 });
@@ -24,7 +37,7 @@ const getAllUserOrders = catchAsync(async (req, res, next) => {
 const orderComplete = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
-  const order = await Meal.findOne({ where: { id } });
+  const order = await Order.findOne({ where: { id } });
 
   await order.update({ status: "completed" });
 
