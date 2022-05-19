@@ -42,11 +42,13 @@ const protectAdmin = catchAsync(async (req, res, next) => {
   next();
 });
 
-// const protectCustomer = catchAsync(async (req, res, next) => {
-//   if (req.sessionUser.role !== "customer") {
-//     return next(new AppError("Sorry, you cannot modify this", 403));
-//   }
-// });
+const protectCustomer = catchAsync(async (req, res, next) => {
+  if (req.sessionUser.role !== "customer") {
+    return next(new AppError("Access not granted", 403));
+  }
+
+  next();
+});
 
 const userExists = catchAsync(async (req, res, next) => {
   const { id } = req.params;
@@ -80,4 +82,5 @@ module.exports = {
   userExists,
   protectUserOwner,
   protectAdmin,
+  protectCustomer,
 };

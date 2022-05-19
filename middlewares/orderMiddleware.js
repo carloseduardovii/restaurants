@@ -9,7 +9,7 @@ const { catchAsync } = require("../utils/catchAsync");
 const orderExists = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
-  const order = await Order.findOne({ where: { id } });
+  const order = await Order.findOne({ where: { id, status: "active" } });
 
   if (!order) {
     return next(new AppError("Order not found, pleace make your order", 404));
@@ -17,7 +17,7 @@ const orderExists = catchAsync(async (req, res, next) => {
 
   req.order = order;
 
-  return next();
+  next();
 });
 
 const mealExists = catchAsync(async (req, res, next) => {
@@ -29,9 +29,9 @@ const mealExists = catchAsync(async (req, res, next) => {
     return next(new AppError("Meal not found, pleace make your order", 404));
   }
 
-  req.meal = meal;
+  req.mealId = meal.id;
 
-  return next();
+  next();
 });
 
 module.exports = { orderExists, mealExists };

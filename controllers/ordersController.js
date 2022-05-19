@@ -7,8 +7,8 @@ const { catchAsync } = require("../utils/catchAsync");
 const { AppError } = require("../utils/appErrors");
 
 const createOrder = catchAsync(async (req, res, next) => {
-  const { sessionUser } = req;
   const { mealId, quantity } = req.body;
+  const { sessionUser } = req;
 
   const meal = await Meal.findByPk(mealId);
 
@@ -29,7 +29,10 @@ const createOrder = catchAsync(async (req, res, next) => {
 });
 
 const getAllUserOrders = catchAsync(async (req, res, next) => {
-  const orders = await Order.findAll();
+  const orders = await Order.findAll({
+    where: { status: "active" },
+    include: [{ model: Meal, attributes: ["name"] }],
+  });
 
   res.status(200).json({ orders });
 });
